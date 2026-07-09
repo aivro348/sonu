@@ -10,16 +10,23 @@ export default function PublicEmergencyView({ params }: { params: { uuid: string
       {/* Critical Header */}
       <header className="bg-alert text-white p-6 sticky top-0 z-50 shadow-md">
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <AlertTriangle size={32} className="animate-pulse" />
+          <div className="flex items-center gap-4">
+            <div className="relative shrink-0">
+              {/* Dummy Image for Verification */}
+              <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah Jenkins" className="w-16 h-16 rounded-full border-2 border-white object-cover shadow-sm" />
+              <div className="absolute -bottom-1 -right-1 bg-white text-alert rounded-full p-1 shadow-sm">
+                <AlertTriangle size={14} className="animate-pulse" />
+              </div>
+            </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">EMERGENCY PROFILE</h1>
-              <p className="text-white/80 font-medium">Sarah Jenkins</p>
+              <p className="text-white font-semibold text-lg">Sarah Jenkins, 32</p>
+              <p className="text-white/80 text-sm">123 Maple Street, Seattle, WA</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-white/20 px-4 py-2 rounded-lg backdrop-blur-md border border-white/10">
+          <div className="flex items-center gap-3 bg-white/20 px-4 py-3 rounded-xl backdrop-blur-md border border-white/10 shrink-0">
             <HeartPulse size={24} />
-            <div className="font-bold text-xl">O+</div>
+            <div className="font-bold text-2xl">O+</div>
           </div>
         </div>
       </header>
@@ -75,9 +82,15 @@ export default function PublicEmergencyView({ params }: { params: { uuid: string
         </section>
 
         {/* Hospital Login Prompt */}
-        <section className="mt-12 pt-8 border-t border-border text-center space-y-4">
-          <p className="text-sm text-foreground/60">Are you an authorized medical professional?</p>
-          <Link href={`/login?redirect=/p/${params.uuid}/edit`} className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-xl text-sm font-medium hover:bg-surface-alt transition-colors">
+        <section className="mt-12 p-8 border border-action/20 bg-action/5 rounded-2xl text-center space-y-4">
+          <h2 className="text-lg font-semibold text-action flex items-center justify-center gap-2">
+            <Activity size={20} />
+            Are you an authorized medical professional?
+          </h2>
+          <p className="text-sm text-foreground/70">
+            Log in to our secure portal to access this patient's complete past health records, medical reports, and comprehensive history.
+          </p>
+          <Link href={`/login?redirect=/p/${params.uuid}/edit`} className="inline-flex items-center justify-center px-8 py-3 bg-action text-white rounded-xl text-sm font-medium hover:bg-action/90 transition-colors shadow-lg shadow-action/20">
             Hospital / Doctor Login
           </Link>
         </section>

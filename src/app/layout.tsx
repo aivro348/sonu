@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import SplashScreen from '@/components/SplashScreen';
+import DisableInspect from '@/components/DisableInspect';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans bg-surface text-foreground antialiased min-h-screen flex flex-col`}>
+        <DisableInspect />
         <SplashScreen />
         {children}
       </body>

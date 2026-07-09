@@ -1,13 +1,39 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { HeartPulse } from 'lucide-react';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('demo@resqu.com');
+  const [password, setPassword] = useState('demo1234');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate network delay for demo
+    setTimeout(() => {
+      router.push('/dashboard');
+    }, 800);
+  };
+
   return (
-    <div className="glass px-4 py-8 sm:px-10 rounded-2xl">
+    <div className="glass px-4 py-8 sm:px-10 rounded-2xl relative overflow-hidden">
+      
+      {/* Demo overlay badge */}
+      <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm shadow-primary/20">
+        Demo Mode
+      </div>
+
       <h2 className="text-center text-2xl font-bold text-foreground mb-6">
         Sign in to your account
       </h2>
       
-      <form className="space-y-6" action="#">
+      <form className="space-y-6" onSubmit={handleLogin}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-foreground/80">
             Email address
@@ -17,6 +43,8 @@ export default function LoginPage() {
               id="email"
               name="email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               required
               className="appearance-none block w-full px-3 py-3 border border-border rounded-xl shadow-sm placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-surface text-foreground transition-all"
@@ -34,6 +62,8 @@ export default function LoginPage() {
               id="password"
               name="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
               className="appearance-none block w-full px-3 py-3 border border-border rounded-xl shadow-sm placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-surface text-foreground transition-all"
@@ -47,6 +77,7 @@ export default function LoginPage() {
               id="remember-me"
               name="remember-me"
               type="checkbox"
+              defaultChecked
               className="h-4 w-4 text-primary focus:ring-primary border-border rounded"
             />
             <label htmlFor="remember-me" className="ml-2 block text-sm text-foreground/80">
@@ -63,10 +94,17 @@ export default function LoginPage() {
 
         <div>
           <button
-            type="button"
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-70"
           >
-            Sign in
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <HeartPulse size={18} className="animate-pulse" /> Authenticating...
+              </span>
+            ) : (
+              'Sign in'
+            )}
           </button>
         </div>
       </form>
